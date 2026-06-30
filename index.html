@@ -78,7 +78,16 @@ document.body.innerHTML=`
 <h2>You just made me the happiest person alive 💖</h2>
 <p>Forever starts now... 🥹</p>
 </div>`;
-setTimeout(()=>{const g=document.getElementById('gif');if(g)g.src='assets/celebration.gif';},3000);
+const images = ['assets/cats.gif','assets/celebration.gif','assets/davis-schulz-hug.gif'];
+let idx = 0;
+function nextImage(){
+    idx++;
+    const g = document.getElementById('gif');
+    if(!g) return;
+    g.src = images[idx];
+    if(idx < images.length - 1) setTimeout(nextImage, 2000);
+}
+setTimeout(nextImage, 2000);
 };
 </script>
 </body>
