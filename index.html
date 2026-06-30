@@ -10,11 +10,13 @@ body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#ff
 .card{background:rgba(255,255,255,.88);padding:40px;border-radius:24px;text-align:center;box-shadow:0 12px 30px rgba(0,0,0,.2)}
 h1{color:#ff2d75;font-size:52px;margin:0}
 h2{color:#444}
-button{padding:14px 28px;border:none;border-radius:30px;font-size:18px;margin:10px;cursor:pointer}
-#yes{    background:#2ecc71;    color:#fff;}#no{    background:#e74c3c;    color:#fff;    position:relative;    min-width:220px;    white-space:nowrap;    transition:all .2s ease;}
+button{padding:14px 28px;border:none;border-radius:30px;font-size:18px;margin:10px;cursor:pointer;width:160px}
+#yes{background:#2ecc71;color:#fff;}#no{background:#e74c3c;color:#fff;transition:all .2s ease;}
+.btn-row{display:flex;justify-content:center;gap:10px;min-height:60px}
 #hearts{position:fixed;inset:0;pointer-events:none}
 .heart{position:absolute;font-size:24px;animation:float 6s linear infinite}
 @keyframes float{from{transform:translateY(110vh)}to{transform:translateY(-20vh)}}
+#message{color:#ff2d75;font-size:18px;margin-top:20px;min-height:24px;font-weight:bold}
 </style>
 </head>
 <body>
@@ -22,8 +24,11 @@ button{padding:14px 28px;border:none;border-radius:30px;font-size:18px;margin:10
 <div class="card">
 <h1>Nivi ❤️</h1>
 <h2>Will You Be My Forever? 💖</h2>
+<div class="btn-row">
 <button id="yes">Yes ❤️</button>
-<button id="no">No 😅</button>
+<div style="width:160px;display:flex;align-items:center;justify-content:center"><button id="no">No 😅</button></div>
+</div>
+<div id="message"></div>
 </div>
 <script>
 const hc=document.getElementById('hearts');
@@ -47,22 +52,22 @@ const messages = [
     "No isn't an option 😂"
 ];
 let currentMessage = 0;
-function moveNoButton() {
-    no.innerText = messages[currentMessage];
+const messageDiv = document.getElementById("message");
+function showMessage() {
+    messageDiv.innerText = messages[currentMessage];
     currentMessage = (currentMessage + 1) % messages.length;
     const maxX = window.innerWidth - no.offsetWidth - 20;
     const maxY = window.innerHeight - no.offsetHeight - 20;
     no.style.position = "fixed";
     no.style.left = Math.random() * maxX + "px";
     no.style.top = Math.random() * maxY + "px";
-    no.style.transform = `rotate(${Math.random()*20-10}deg)`;
 }
 ["mouseenter","mouseover","mousedown"].forEach(event=>{
-    no.addEventListener(event,moveNoButton);
+    no.addEventListener(event,showMessage);
 });
 no.addEventListener("touchstart",function(e){
     e.preventDefault();
-    moveNoButton();
+    showMessage();
 },{passive:false});
 
 document.getElementById('yes').onclick=()=>{
